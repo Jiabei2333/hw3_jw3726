@@ -1,0 +1,56 @@
+---
+title: "hw3"
+author: "Jiabei Wang"
+date: "2018???10???11???"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(p8105.datasets)
+library(tidyverse)
+data(brfss_smart2010)  
+brfss_smart2010 = janitor::clean_names(brfss_smart2010) %>% 
+filter(topic == "Overall Health") %>%
+mutate(response = forcats::fct_relevel(response, c("Excellent", "Good", "Very good", "Fair", "Poor")))
+year_2002 = filter(brfss_smart2010, year == 2002)%>%
+group_by(locationdesc,locationabb) %>% group_by(locationabbr) %>% summarize(n=n()/5) ##7 locations observed
+
+year_2002_2010 = brfss_smart2010 %>%
+group_by(locationdesc,locationabbr, year) %>% group_by(locationabbr, year) %>%
+summarize(n=n()/5)
+
+ggplot(year_2002_2010, aes(x = year, y = n, color = locationabbr)) + 
+    geom_line() + 
+    theme(legend.position = "bottom") ##spaghetti plot
+
+brfss_smart2010 %>%
+  janitor::clean_names() %>%
+  spread(key = response, value = data_value)%>% 
+  janitor::clean_names() %>%
+filter(year == 2002|year == 2006|year == 2010, locationabbr == 'NY' ) %>%
+group_by(year) %>%
+  #na.omit() %>%
+summarize(mean = mean(excellent, na.rm = TRUE), sd = sd(excellent, na.rm = TRUE)) %>%
+ knitr::kable(digits = 1) 
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
