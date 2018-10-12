@@ -34,7 +34,7 @@ summarize(mean = mean(excellent, na.rm = TRUE), sd = sd(excellent, na.rm = TRUE)
  knitr::kable(digits = 1) 
 
 ```
-
+##Question 2
 ```{r}
 data(instacart) 
 data_instacart = janitor::clean_names(instacart) %>% 
@@ -68,7 +68,8 @@ knitr::kable(mean_hour_data)
 
 
 ```
-
+the number of observations in data_instacart is `r dim(data_instacart)`
+The key variables are 
 
 ```{r}
 data(ny_noaa)
