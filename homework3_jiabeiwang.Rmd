@@ -132,6 +132,7 @@ ggplot(b, aes(x = tmax_F, y = tmin_F)) +
   geom_density() 
 ```
 (2)From the scatterplot, the mean max temperature of january is around zero F, and the mean max temperature of july is around 300F. No outlier is observed.  
-3(i) From the plot, the tmax and tmin
+3(i) From the plot on the left, the value of tmin and tmax occur most around zero. 
+From the plot on the right, the density is largest when the value of snowfall is zero. Also, the density of snow fall is gerally decreasing with the increasing value snowfall.  
 
 
