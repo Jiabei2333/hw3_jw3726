@@ -34,7 +34,6 @@ summarize(mean = mean(excellent, na.rm = TRUE), sd = sd(excellent, na.rm = TRUE)
  knitr::kable(digits = 1) 
 
 ```
-<<<<<<< HEAD
 States CT, FL, and NC
 Florida is the outlier, and most states range from zero to fifteen, and they do not have big changes through the year.
 
@@ -73,11 +72,11 @@ knitr::kable(mean_hour_data)
 
 
 ```
-the number of observations in data_instacart is `r dim(data_instacart)`
-The key variables are 
+The number of observations in data_instacart is `r dim(data_instacart)`
+Fresh vegetables are the most items ordered from. 
+The key variables of the data set are order number, order dow, product name,and aisle. 
 
 ```{r}
-data(ny_noaa)
 library(tidyverse)
 data (ny_noaa) 
   ny_noaa = janitor::clean_names(ny_noaa) %>%
@@ -86,13 +85,14 @@ data (ny_noaa)
 rename(prcp_mm = prcp, snow_in = snow, tmax_F = tmax, tmin_F = tmin) %>%
 separate(date, into = c("year", "month", "day"), sep = "-") 
 
-    
-  
 ny_noaa %>% 
     group_by(snow_in) %>%
    count() %>%
     filter(min_rank(desc(n)) < 2)  
-  
+```
+The most observed value of snowfall is zero, since the most of time in NY, there's no snowfall. 
+
+```{r}
 a = ny_noaa %>% 
     group_by(id, month) %>%
   filter(month == "01"|month == "07") %>%
@@ -123,6 +123,10 @@ b = ny_noaa %>%
   geom_density()
   
 ```
+The size of the data set is `r dim(ny_noaa)`
+The key variables of the original data set are id,date, snow, tmax, and tmin. 
+There are missing data in variable "prcp", "snow", "snwd", "tmax", and "tmin". Among these variables, "tmax" and "tmin" have the largest number of missing values.
+
 
 ```{r}
 library(ggplot2)
@@ -131,8 +135,10 @@ ggplot(b, aes(x = tmax_F, y = tmin_F)) +
   geom_hex() + ggplot(c, aes(x = snowfall, fill = year)) + 
   geom_density() 
 ```
+
 (2)From the scatterplot, the mean max temperature of january is around zero F, and the mean max temperature of july is around 300F. No outlier is observed.  
-3(i) From the plot on the left, the value of tmin and tmax occur most around zero. 
+3(i) From the plot on the left, the value of tmin and tmax occur most around zero.
+(ii)
 From the plot on the right, the density is largest when the value of snowfall is zero. Also, the density of snow fall is gerally decreasing with the increasing value snowfall.  
 
 
