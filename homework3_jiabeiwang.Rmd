@@ -13,7 +13,7 @@ brfss_smart2010 = janitor::clean_names(brfss_smart2010) %>%
 filter(topic == "Overall Health") %>%
 mutate(response = forcats::fct_relevel(response, c("Excellent", "Good", "Very good", "Fair", "Poor")))
 year_2002 = filter(brfss_smart2010, year == 2002)%>%
-group_by(locationdesc,locationabb) %>% group_by(locationabbr) %>% summarize(n=n()/5) ##7 locations observed
+group_by(locationdesc,locationabbr) %>% group_by(locationabbr) %>% summarize(n=n()/5) ##7 locations observed
 
 year_2002_2010 = brfss_smart2010 %>%
 group_by(locationdesc,locationabbr, year) %>% group_by(locationabbr, year) %>%
@@ -34,6 +34,7 @@ summarize(mean = mean(excellent, na.rm = TRUE), sd = sd(excellent, na.rm = TRUE)
  knitr::kable(digits = 1) 
 
 ```
+<<<<<<< HEAD
 States CT, FL, and NC
 Florida is the outlier, and most states range from zero to fifteen, and they do not have big changes through the year.
 
@@ -81,7 +82,6 @@ library(tidyverse)
 data (ny_noaa) 
   ny_noaa = janitor::clean_names(ny_noaa) %>%
   group_by(id)  %>%
-    View
     ##units
 rename(prcp_mm = prcp, snow_in = snow, tmax_F = tmax, tmin_F = tmin) %>%
 separate(date, into = c("year", "month", "day"), sep = "-") 
@@ -89,9 +89,9 @@ separate(date, into = c("year", "month", "day"), sep = "-")
     
   
 ny_noaa %>% 
-    group_by(snow) %>%
+    group_by(snow_in) %>%
    count() %>%
-    filter(min_rank(desc(n)) < 2)  %>%
+    filter(min_rank(desc(n)) < 2)  
   
 a = ny_noaa %>% 
     group_by(id, month) %>%
@@ -99,6 +99,7 @@ a = ny_noaa %>%
    mutate(tmax_F = as.numeric(tmax_F, na.rm=TRUE)) %>%
   summarize(mean_tmax_F = mean(tmax_F)) %>% 
   na.omit(mean_tmax_F)
+
  ggplot(a, aes(x =id, y = mean_tmax_F)) + 
   geom_point(alpha = .5) +
   geom_smooth(se = FALSE) +
