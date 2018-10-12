@@ -4,7 +4,7 @@ author: "Jiabei Wang"
 date: "2018/10/11"
 output: html_document
 ---
-
+##Question 1
 ```{r}
 library(p8105.datasets)
 library(tidyverse)
