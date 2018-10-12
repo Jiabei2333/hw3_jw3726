@@ -5,7 +5,7 @@ date: "2018???10???11???"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r}
 library(p8105.datasets)
 library(tidyverse)
 data(brfss_smart2010)  
@@ -70,12 +70,13 @@ summarize(order_eachday = sum(order_number)) %>%
 spread(key = order_dow, value = order_eachday) %>%
   group_by(product_name)
 knitr::kable(mean_hour_data) 
-
 ```
+
+
 The number of observations in data_instacart is `r dim(data_instacart)`
 Fresh vegetables are the most items ordered from. 
 The key variables of the data set are order number, order dow, product name, aisle, and product id. 
-One illstrative example can be that Bulgarian Yogurt which has order id " 49302" belongs to the alsle "yogurt" is ordered on the fourth day of the week with order number 4. 
+One illstrative example can be that Bulgarian Yogurt which has order id 43098 belongs to the alsle yogurt is ordered on the fourth day of the week with order number 4. 
 
 ```{r}
 library(tidyverse)
