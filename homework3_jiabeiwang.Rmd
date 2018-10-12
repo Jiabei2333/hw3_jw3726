@@ -69,6 +69,64 @@ knitr::kable(mean_hour_data)
 
 ```
 
+
+```{r}
+data(ny_noaa)
+library(tidyverse)
+data (ny_noaa) 
+  ny_noaa = janitor::clean_names(ny_noaa) %>%
+  group_by(id)  %>%
+    View
+    ##units
+rename(prcp_mm = prcp, snow_in = snow, tmax_F = tmax, tmin_F = tmin) %>%
+separate(date, into = c("year", "month", "day"), sep = "-") 
+
+    
+  
+ny_noaa %>% 
+    group_by(snow) %>%
+   count() %>%
+    filter(min_rank(desc(n)) < 2)  %>%
+  
+a = ny_noaa %>% 
+    group_by(id, month) %>%
+  filter(month == "01"|month == "07") %>%
+   mutate(tmax_F = as.numeric(tmax_F, na.rm=TRUE)) %>%
+  summarize(mean_tmax_F = mean(tmax_F)) %>% 
+  na.omit(mean_tmax_F)
+ ggplot(a, aes(x =id, y = mean_tmax_F)) + 
+  geom_point(alpha = .5) +
+  geom_smooth(se = FALSE) +
+   facet_grid(~month)
+ 
+ ##Make a two-panel plot showing the average max temperature
+b = ny_noaa %>% 
+  na.omit(tmin_F)%>%
+  na.omit(tmin_F) %>%
+  mutate(tmax_F = as.numeric(tmax_F, na.rm=TRUE)) %>%
+   mutate(tmin_F = as.numeric(tmin_F, na.rm=TRUE)) 
+  ggplot(b, aes(x = tmax_F, y = tmin_F)) + 
+  geom_hex()
+  
+##Make a two-panel plot showing (i) tmax vs tmin for the full dataset (note that a scatterplot may not be the best option); and (ii) make a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.
+  c = ny_noaa %>% 
+  na.omit(snow_in) %>%
+  mutate(snowfall = as.numeric(snow_in, na.rm=TRUE)) %>%
+  filter(snowfall>0,snowfall<100) 
+  ggplot(c, aes(x = snowfall, fill = year)) + 
+  geom_density()
+  
+```
+
+```{r}
+library(ggplot2)
+library(patchwork)
+ggplot(b, aes(x = tmax_F, y = tmin_F)) + 
+  geom_hex() + ggplot(c, aes(x = snowfall, fill = year)) + 
+  geom_density() 
+```
+```
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
