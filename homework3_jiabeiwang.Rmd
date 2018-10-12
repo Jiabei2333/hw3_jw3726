@@ -13,7 +13,8 @@ brfss_smart2010 = janitor::clean_names(brfss_smart2010) %>%
 filter(topic == "Overall Health") %>%
 mutate(response = forcats::fct_relevel(response, c("Excellent", "Good", "Very good", "Fair", "Poor")))
 year_2002 = filter(brfss_smart2010, year == 2002)%>%
-group_by(locationdesc,locationabbr) %>% group_by(locationabbr) %>% summarize(n=n()/5) ##7 locations observed
+group_by(locationdesc,locationabbr) %>% group_by(locationabbr) %>% summarize(n=n()/5)  ##7 locations observed
+
 
 year_2002_2010 = brfss_smart2010 %>%
 group_by(locationdesc,locationabbr, year) %>% group_by(locationabbr, year) %>%
@@ -34,8 +35,8 @@ summarize(mean = mean(excellent, na.rm = TRUE), sd = sd(excellent, na.rm = TRUE)
  knitr::kable(digits = 1) 
 
 ```
-States CT, FL, and NC
-Florida is the outlier, and most states range from zero to fifteen, and they do not have big changes through the year.
+States CT, FL, and NC were observed at 7 locations. 
+From the spaghetti plot, Florida is the outlier, and most states range from zero to fifteen, and they do not have big changes through the year.
 
 ##Question 2
 
@@ -70,11 +71,11 @@ spread(key = order_dow, value = order_eachday) %>%
   group_by(product_name)
 knitr::kable(mean_hour_data) 
 
-
 ```
 The number of observations in data_instacart is `r dim(data_instacart)`
 Fresh vegetables are the most items ordered from. 
-The key variables of the data set are order number, order dow, product name,and aisle. 
+The key variables of the data set are order number, order dow, product name, aisle, and product id. 
+One illstrative example can be that Bulgarian Yogurt which has order id " 49302" belongs to the alsle "yogurt" is ordered on the fourth day of the week with order number 4. 
 
 ```{r}
 library(tidyverse)
@@ -92,6 +93,7 @@ ny_noaa %>%
 ```
 The most observed value of snowfall is zero, since the most of time in NY, there's no snowfall. 
 
+##Question 3
 ```{r}
 a = ny_noaa %>% 
     group_by(id, month) %>%
@@ -104,6 +106,9 @@ a = ny_noaa %>%
   geom_point(alpha = .5) +
   geom_smooth(se = FALSE) +
    facet_grid(~month)
+ 
+ ggplot(a, aes(x = month, y = mean_tmax_F)) + 
+  geom_boxplot() 
  
  ##Make a two-panel plot showing the average max temperature
 b = ny_noaa %>% 
@@ -136,7 +141,7 @@ ggplot(b, aes(x = tmax_F, y = tmin_F)) +
   geom_density() 
 ```
 
-(2)From the scatterplot, the mean max temperature of january is around zero F, and the mean max temperature of july is around 300F. No outlier is observed.  
+(2)From the scatterplot, the mean max temperature of january is around zero F, and the mean max temperature of july is around 300F.From the boxplot, we observe there are two outliers in july: one is below average and one is above average. 
 3(i) From the plot on the left, the value of tmin and tmax occur most around zero.
 (ii)
 From the plot on the right, the density is largest when the value of snowfall is zero. Also, the density of snow fall is gerally decreasing with the increasing value snowfall.  
