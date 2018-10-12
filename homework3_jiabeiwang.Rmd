@@ -125,7 +125,9 @@ ggplot(b, aes(x = tmax_F, y = tmin_F)) +
   geom_hex() + ggplot(c, aes(x = snowfall, fill = year)) + 
   geom_density() 
 ```
-```
+(2)From the scatterplot, the mean max temperature of january is around zero F, and the mean max temperature of july is around 300F. No outlier is observed.  
+3(i) From the plot, the tmax and tmin
+
 
 ## R Markdown
 
