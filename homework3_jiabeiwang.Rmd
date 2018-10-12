@@ -34,7 +34,11 @@ summarize(mean = mean(excellent, na.rm = TRUE), sd = sd(excellent, na.rm = TRUE)
  knitr::kable(digits = 1) 
 
 ```
+States CT, FL, and NC
+Florida is the outlier, and most states range from zero to fifteen, and they do not have big changes through the year.
+
 ##Question 2
+
 ```{r}
 data(instacart) 
 data_instacart = janitor::clean_names(instacart) %>% 
