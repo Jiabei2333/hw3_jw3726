@@ -1,7 +1,7 @@
 ---
 title: "hw3"
 author: "Jiabei Wang"
-date: "2018???10???11???"
+date: "2018/10/11"
 output: html_document
 ---
 
@@ -47,12 +47,18 @@ group_by(aisle) %>%
 summarize(n = n()) %>%
 filter(min_rank(desc(n)) < 2)
 
-##make a histogram
+## make a scatterplot
 instacart %>%
-  ggplot( aes(x = aisle_id)) +
-  geom_histogram()
+  group_by(aisle_id) %>%
+  summarize(n = n()) %>%
+ggplot(aes(x = aisle_id, y = n)) + 
+  geom_point(alpha = .5) + 
+  labs(
+    title = "Order Number Distribution Plot",
+    x = "Aisle ID",
+    y = "Order Number"
+  )
 
-##
 one = instacart %>%
 filter(aisle == "baking ingredients"|aisle == "dog food care"|aisle =="packaged vegetables fruits") %>%
 group_by(aisle, product_name) %>%
@@ -71,10 +77,8 @@ spread(key = order_dow, value = order_eachday) %>%
   group_by(product_name)
 knitr::kable(mean_hour_data) 
 ```
-
-
-The number of observations in data_instacart is `r dim(data_instacart)`
-Fresh vegetables are the most items ordered from. 
+There are 134 aisles, and fresh vegetables are the most items ordered from. From the Order Number Distribution plot, the points show the order number of different aisle ID, and there are some outliers which lay far above others, indicating these aisles are in large demand. 
+Threre are 1384617 observations in this dataset. 
 The key variables of the data set are order number, order dow, product name, aisle, and product id. 
 One illstrative example can be that Bulgarian Yogurt which has order id 43098 belongs to the alsle yogurt is ordered on the fourth day of the week with order number 4. 
 
